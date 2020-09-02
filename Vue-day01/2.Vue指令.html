@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./Vue.js"></script>
+    <style>
+        /* 解决页面刚进入会有闪动的问题 */
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <p>{{msg}}</p>
+        <!-- 渲染数据 不解析标签 -->
+        <p v-text="msg2"></p>
+        <!-- 渲染数据 解析标签 -->
+        <p v-html="msg3"></p>
+        <!-- 保留预格式 预留位置 跳过不渲染 -->
+        <p v-pre>{{msg}}</p>
+        <p>{{number}}</p>
+        <!-- 数据渲染到页面上之后不再进行更新，只有页面初始化渲染一次页面，后续数据更新，页面中的数据也不会再更新 -->
+        <p v-once>{{number}}</p>
+        <hr />
+        <!-- 双向数据绑定 数据驱动视图，视图也可以驱动数据-->
+        <input type="text" v-model="msg4" />
+        <p>{{msg4}}</p>
+
+        <input type="radio" value="男" v-model="ischeck" />男
+        <input type="radio" value="女" v-model="ischeck" />女
+        <p>{{ischeck}}</p>
+        <hr />
+        <!-- v-on:事件类型=“业务逻辑||函数名” -->
+        <!-- v-on: 可以简写为  @  @click -->
+        <!-- 函数名 这里方法 没有参数时加不加括号都一样 传参必须加括号-->
+        <button v-on:click="doThis">按钮</button>
+        <!-- 具体业务逻辑 -->
+        <button v-on:click="msg5='456'">按钮</button>{{msg5}}
+        <hr />
+        <input type="text" v-model="msg6" />
+        <button v-on:click="add(33)">按钮</button>
+        <!-- 无参数拿到按钮中的数字 -->
+        <button v-on:click="add1">按钮+6</button>
+        <!-- 有参数拿到按钮中的数字 -->
+        <button v-on:click="add2(8,$event)">按钮+7</button>
+    </div>
+
+
+    <script>
+        var m = new Vue ({
+            el: '#app',
+            data: {
+                msg: '111111',
+                msg2: '2222222',
+                msg3: '<strong>33333333</strong>',
+                number: 10,
+                msg4: '123456',
+                ischeck: '',
+                msg5: '123',
+                msg6: 5
+            },
+            // methods节点中是用来定义各个函数的
+            methods: {
+                doThis() {
+                    alert('haha')
+                },
+                add(a) {
+                    // 方法中需要访问data中的数据，使用this.数据名，这个this指向new出来的Vue实例
+                    console.log(this.msg6);
+                    this.msg6 += a
+                },
+                add1(event) {
+                    var res = event.target.innerHTML
+                    console.log(res); // 拿到按钮里面的 按钮+6  的内容
+                    console.log(res.substring(event.target.innerHTML.indexOf('+')+1)); //100
+                    this.msg6 += (res.substring(event.target.innerHTML.indexOf('+')+1)-0)// -0 是为了做隐式转换 将字符串转为数字
+                },
+                add2(num,event) {
+                    var res = event.target.innerHTML // 拿到按钮里面的 按钮+6  的内容
+                    console.log(res.substring(event.target.innerHTML.indexOf('+')+1)); //100
+                    num += (res.substring(event.target.innerHTML.indexOf('+')+1)-0)// -0 是为了做隐式转换 将字符串转为数字
+                }
+            }
+        })
+    </script>
+</body>
+</html>

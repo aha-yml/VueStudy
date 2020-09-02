@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <!-- v-model 是双向数据绑定 v-bidnd:属性绑定 是单向数据绑定 v-bind: 简写为 : -->
+        <input type="text" v-bind:value="msg">
+        <input type="text" :value="msg">
+        <input type="checkbox" :checked="boo">
+        <input type="text" v-model="msg">
+        {{msg}}
+    </div>
+    <script src='./Vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{ 
+                msg: "111",
+                boo: true
+             },
+            methods:{},
+        })
+    </script>
+</body>
+</html>

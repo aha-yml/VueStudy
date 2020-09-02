@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style>
+        .section {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+        .active {
+            font-size: 40px;
+        }
+        .color {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id='app'>
+        <!-- 属性绑定类名中 {k:v} k 表示的是类名 v 一般是一个布尔值 -->
+        <div class="color" :class={section:isSection,active:true}>文字</div>
+        <hr />
+        <!-- 抽离的方式 -->
+        <div :class="obj">文字</div>
+    </div>
+    <script src='./Vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{ 
+                isSection: true,
+                obj: {section:true,active:true,color:true}
+             },
+            methods:{},
+        })
+    </script>
+</body>
+</html>

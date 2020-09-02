@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 1.导入Vue文档 -->
+    <script src="./Vue.js"></script>
+</head>
+<body>
+    <div id='app'>
+        <!-- 3. 使用插值表达式 渲染数据 -->
+      {{ msg }}
+    </div>
+
+    <script>
+        // 2. new 个实例
+          new Vue({
+            //   el 指定 控制HTML容器范围
+              el: '#app',
+            //   data 放置数据的一个配置项
+              data: {
+                  msg: 'hello world'
+              }
+          })
+    </script>
+</body>
+</html>

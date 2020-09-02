@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <!-- 键盘抬起事件 如果按下的是回车键 触发执行submit事件  .enter .delete 等等-->
+        <input type="text" @keyup.enter="submit" />
+        <input type="text" @keyup.o="submit" />
+        <input type="text" @keyup.y="submit" />
+    </div>
+    <script src='./Vue.js'></script>
+    <script>
+        // 自定义按键修饰符
+        // Vue.config.keyCodes.别名 = 键位码 18代表的Alt键 按下Alt键会触发该事件
+        Vue.config.keyCodes.y = 18;
+        new Vue({
+            el: '#app',
+            data:{  },
+            methods:{
+                submit() {
+                    console.log("触发事件");
+                }
+            },
+        })
+    </script>
+</body>
+</html>

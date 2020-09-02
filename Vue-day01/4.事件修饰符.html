@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            background-clip: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id='app' v-cloak>
+        <div @click.stop.once="div">
+            <!-- 事件修饰符可以链式联写 -->
+            <!-- 在对应的事件类型后面添加官方提供的事件修饰符  .stop 可以阻止事件冒泡 .prevent阻止事件默认行为 .once只触发一次回调 -->
+            <button @click.stop.once="btn"> 按钮</button>
+            <a href="https://www.baidu.com" @click.prevent.stop="a">百度一下</a>
+        </div>
+       
+    </div>
+    <script src="Vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{},
+            methods:{
+              btn() {
+                  console.log("触发了按钮事件");
+              },
+              div() {
+                  console.log("触发了div事件");
+              },
+              a() {
+                  console.log("触发了a链接事件");
+              },
+            },
+        })
+    </script>
+</body>
+</html>
