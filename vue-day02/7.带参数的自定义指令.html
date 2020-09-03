@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <input type="text" value="123" v-color="obj">
+    </div>
+    <script src='./Vue.js'></script>
+    <script>
+        // Vue.directive(指令名,{配置对象})  一定要在实例之前创建
+        Vue.directive('color',{
+            bind(el,binding) {
+                // 这里的binding.value指的是上面 v-color="obj" 中的obj，代表实参
+                el.style.color = binding.value.color;
+                el.style.background = binding.value.bacolor
+            }
+        })
+        new Vue({
+            el: '#app',
+            data:{ 
+                obj: {
+                    color: 'skyblue',
+                    bacolor: 'pink'
+                }
+             },
+            methods:{},
+        })
+    </script>
+</body>
+</html>

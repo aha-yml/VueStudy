@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <input type="text" v-focus>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{  },
+            methods:{},
+            // 局部指令只在当前定义的Vue实例中有作用
+            //  局部指令配置位置
+            directives: {
+                // 指令名: 配置对象
+                focus: {
+                    inserted(el) {
+                        el.focus()
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

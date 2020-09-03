@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <input type="text" v-model="ipt">{{ipt}}
+        <hr>
+        <!-- <textarea name="" id="" cols="30" rows="10"></textarea> -->
+        <input type="textarea" v-model="msg">{{msg}}
+        <hr>
+        <!-- 一定要设置value值 -->
+        <input type="radio" v-model="sex" value="0">男
+        <input type="radio" v-model="sex" value="1">女 {{sex}}
+        <hr>
+        <!-- 单个复选框的情况下 默认绑定到布尔值 -->
+        <input type="checkbox" v-model="check">1 {{check}}
+        <hr>
+        <!-- 多个复选框的情况下 以数组形式表示 -->
+        <input type="checkbox" v-model="hobby" value="one">一
+        <input type="checkbox" v-model="hobby" value="two">二
+        <input type="checkbox" v-model="hobby" value="three">三 {{hobby}}
+        <hr>
+        <!-- 下拉列表 选中单个绑定到option项具体的值 -->
+        <select v-model="language">
+            <option value="1">汉族</option>
+            <option value="2">满族</option>
+            <option value="3">苗族</option>
+            <option value="4">彝族</option>
+            <option value="5">傣族</option>
+        </select>{{language}}
+        <hr>
+        <!-- 下拉表单 多选框会将选中的选项的value值存到一个数组中 -->
+        <select v-model="language1" multiple>
+            <option value="1">汉族</option>
+            <option value="2">满族</option>
+            <option value="3">苗族</option>
+            <option value="4">彝族</option>
+            <option value="5">傣族</option>
+            </select>{{language1}}
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{ 
+                ipt: "哈哈",
+                sex: "1",
+                check: true,
+                hobby: ['one'],
+                language: '1',
+                language1: [],
+                msg: ''
+
+             },
+            methods:{},
+        })
+    </script>
+</body>
+</html>

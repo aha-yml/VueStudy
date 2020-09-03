@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+       <!-- 分支结构 v-show的原理：控制元素样式是否显示：display:none -->
+
+        <!-- v-if 有较高的频繁切换的消耗 -->
+        <div v-if="scroe>=90">优秀</div>
+        <div v-else-if="scroe<90 && scroe>=80">优秀</div>
+        <div v-else-if="scroe<80 && scroe>=60">一般</div>
+        <div v-else>不及格</div>
+        <hr>
+        <!-- v-show 有较高的初始渲染消耗 -->
+        <div v-show="scroe>=90">优秀</div>
+        <div v-show="scroe<90 && scroe>=80">优秀</div>
+        <div v-show="scroe<80 && scroe>=60">一般</div>
+        <div v-show="scroe<60">不及格</div>
+        <div v-show="flag">测试v-show</div>
+    </div>
+    <script src='./Vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data:{ 
+                scroe: 90,
+                flag: true
+             },
+            methods:{},
+        })
+    </script>
+</body>
+</html>
