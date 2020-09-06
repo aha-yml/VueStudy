@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <!-- 子组件向父组件传值  本质是父组件向子组件传递方法 -->
+        <!-- 无参数 -->
+        <com @handler="phandler"></com>
+        <!-- 有参数  参数是固定的 $event,不能自己做修改-->
+        <coma @handler1="phandler1($event)"></coma>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // 1.在子组件中定义 点击等事件，在事件中通过$emit('自定义事件名')
+        // 2.在父组件中 定义自定义事件名
+        // 3.在父组件中定义方法
+
+        // 无参数
+        Vue.component('com',{
+            template: `
+                <div>
+                    子组件coma <button @click="$emit('handler')">按钮</button>
+                </div>
+            `
+        }),
+        // 带参数的
+        Vue.component('coma',{
+            // 传递的参数的时候，可以用数组或对象的方法，对象是键值对的
+            template: `
+                <div>
+                    子组件coma <button @click="$emit('handler1',[color,bgc,fz])">按钮</button>
+                </div>
+            `,
+            data() {
+                return {
+                    color: 'pink',
+                    bgc: 'skyblue',
+                    fz: 20,
+
+                }
+            }
+        }),
+        new Vue({
+            el: '#app',
+            data:{  },
+            methods:{
+                phandler() {
+                    console.log('父组件的方法1');
+                },
+                phandler1(param) {
+                    console.log('父组件的方法2');
+                    document.querySelector('div').style.color = param[0];
+                    document.querySelector('div').style.backgroundColor = param[1];
+                    document.querySelector('div').style.fontSize = `${param[2]}px`;
+                },
+            },
+        })
+    </script>
+</body>
+</html>

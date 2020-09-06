@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <!-- 父组件向子组件传递数据 -->
+    <div id='app'>
+        <!-- 1.传递 在子组件使用的位置 通过 ！！！属性绑定！！！ 的方式 -->
+       <coma :message="msg"></coma>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // 2.接收 在子组件定义定义的位置 通过props属性来接收，props值是一个数组
+        Vue.component('coma', {
+            // props中命名最好都用小写，如果用驼峰命名，上面的结构需要用短横线连接，子组件中用驼峰式接收
+            props: ['message'],
+            template: `<div>我是子组件----{{message}}</div>`,
+            data() {
+                return {};
+            }
+        })
+        new Vue({
+            el: '#app',
+            data:{ 
+                msg: '放学吃饭----赶紧下课吧'
+             },
+            methods:{},
+        })
+    </script>
+</body>
+</html>

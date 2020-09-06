@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <span>用户名：</span>
+        <input type="text" v-model.lazy="uname">
+        <span>{{tip}}</span>
+    </div>
+    <script src='./vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                uname: '',
+                tip: ''
+            },
+            methods: {
+                checkName(a) {
+                    setTimeout(() => {
+                        if (a == 'admin') {
+                            this.tip = '用户名已被占用'
+                        } else {
+                            this.tip = '用户名申请成功'
+                        }
+                    }, 2000)
+                }
+            },
+            // 侦听器
+            watch: {
+                // 使用watch来响应数据的变化
+                // 一般用于异步或者开销较大的操作
+                // watch 中的属性 一定是data 中 已经存在的数据 
+                uname(val) {
+                    this.checkName(val);
+                    this.tip = '正在验证...'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

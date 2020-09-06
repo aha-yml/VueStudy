@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+         <style type="text/css">
+    .grid {
+      margin: auto;
+      width: 530px;
+      text-align: center;
+    }
+    .grid table {
+      border-top: 1px solid #C2D89A;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .grid th,td {
+      padding: 10;
+      border: 1px dashed #F3DCAB;
+      height: 35px;
+      line-height: 35px;
+    }
+    .grid th {
+      background-color: #F3DCAB;
+    }
+    .grid .book {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      background-color: #F3DCAB;
+    }
+    .grid .total {
+      height: 30px;
+      line-height: 30px;
+      background-color: #F3DCAB;
+      border-top: 1px solid #C2D89A;
+    }
+    [v-cloak] {
+        display: none
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"  v-cloak>
+      <div class="grid">
+        <div>
+          <h1>图书管理</h1>
+          <div class="book">
+            <div>
+              <label for="id" > 编号： </label> <input type="text" id="id" disabled v-model="id"/>
+              <label for="name"> 名称： </label>
+              <input type="text" id="name" autocomplete="off" v-model="name" v-focus/> <button @click="handler" :disable="isSubmit">提交</button>
+            </div>
+          </div>
+        </div>
+        <div class="total"><span>图书总数：</span> <span>{{count}}</span></div>
+        <table>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>名称</th>
+              <th>时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in books" :key="item.id">
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.date | time1("yyyy-mm-dd")}}</td>
+              <td><a href="" @click.prevent="toEdit(item.id)">修改</a> | <a href="" @click.prevent="delbook(item.id)">删除</a></td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+      // 自定义指令 获取焦点
+      Vue.directive('focus',{
+        inserted(el) {
+          el.focus();
+        }
+      })
+      // 时间过滤器
+      Vue.filter('time1',function(val,param) {
+            // 带参数的过滤器，参数1是要过滤的数据，后面的参数是用户传奇的参数
+            const data = new Date(val);
+            const y = data.getFullYear();
+            const m = data.getMonth() + 1;
+            const s = data.getDate();
+            if (param == 'yyyy') {
+                return `${y}`;
+            }else if (param == 'yyyy-mm') {
+                return `${y}-${m}`
+            }else if (param == 'yyyy-mm-dd') {
+                return `${y}-${m}-${s}`
+            }
+            
+        })
+      new Vue({
+        el: "#app",
+        data: {
+          // id
+          id: '',
+          // 图书的name
+          name: '',
+          // 设置增加或编辑的开关
+          isEdit: false,
+          // 控制提交按钮的开关
+          isSubmit: false,
+          books: []
+        },
+        // 计算属性
+        computed: {
+          count() {
+            return this.books.length
+          }
+        },
+        // 钩子函数
+        created() {
+          // 发送请求 获取到数组数据
+          const data = [
+            { id: 1, name: '三国演义', date: 1599288690549},
+            { id: 2, name: '水浒传', date: 1599288690549},
+            { id: 3, name: '西游记', date: 1599288690549},
+            { id: 4, name: '红楼梦', date: 1599288690549}
+          ];
+          this.books = data;
+        },
+        methods: {
+          // 提交,添加图书
+          handler() {
+            // 非空校验
+              if(!this.name) return alert('不能为空');
+              if(this.isEdit == false) {
+                this.books.push({
+                id: this.books.length ? this.books[this.books.length -1].id + 1 : 1,
+                name: this.name,
+                date: +new Date()
+              });
+              }else {
+                // 修改图书
+                // 当点击修改按钮后，data中的id和name已经被赋值了
+                console.log(this.id);
+                console.log(this.name);
+                this.books.some((item) => {
+                  if(item.id == this.id) {
+                    item.name = this.name;
+                    // 节省循环次数 some方法 遇到true后会终止循环
+                    return true;
+                  }
+                });
+                // 修改结束后将开关设置为 false
+                this.isEdit = false;
+              }
+              // 提交结束将表单清空
+              this.id = this.name = '';
+          },
+          // 侦听器
+          watch: {
+            // 如果用户输入的name值和数据的name字段一直，就禁用提交按钮，反之则开启
+            // some方法返回值是一个布尔值，不可以在循环中去进行赋值操作
+                name(val) {
+                  this.isSubmit = this.books.some((item) => item.name == val)
+                }
+          },
+          // 删除图书
+          // 方式一：通过索引截取数组元素
+          // 拿到id找到对应删除元素的索引，findIndex返回要找的数组元素的索引值
+          // delbook(id) {
+          //   const index = this.books.findIndex((item) => item.id == id);
+          //   console.log(index);
+          //   // 调用数组截取的方法
+          //   this.books.splice(index,1)
+          // }
+          // 方式二：数组过滤 filter
+          delbook(id) {
+            this.books = this.books.filter(item => item.id != id)
+          },
+          // 修改图书
+          // 方式一
+          // toEdit(id) {
+            // 点击修改按钮，将开关打开
+            // this.isEdit = true;
+            // 接受到用户传奇的id,数组中知道id一样的元素，将id值和name值渲染在页面上
+          //    const i = this.books.findIndex((item) => item.id == id);
+          //    console.log(this.books[i]);
+          //    console.log(this.books[i].id);
+          //    this.name = thisbooks[i].name
+          // }
+          // 方式二
+          toEdit(id) {
+            // 点击修改按钮，将开关打开
+            this.isEdit = true;
+             const res = this.books.filter((item) => item.id == id);
+             console.log(res);
+             this.id = res[0].id;
+             this.name = res[0].name;
+             
+          }
+        },
+      });
+    </script>
+  </body>
+</html>

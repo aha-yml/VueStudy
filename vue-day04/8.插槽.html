@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <com>文字</com>
+         <com></com>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // 插槽是给HTML结构内的标签内容预留位置 固定写法<solt></slot> 如果HTML标签不写内容，就是slot标签中的内容，如果HTML标签有内容，则会覆盖slot中的内容
+        Vue.component('com', {
+            template: `
+                  <div>
+                    我是组件com <slot>默认值</slot>
+                </div>
+            `
+        })
+        new Vue({
+            el: '#app',
+            data:{  },
+            methods:{},
+        })
+    </script>
+</body>
+</html>

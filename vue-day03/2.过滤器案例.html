@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <div>{{timer | time | str}}</div>
+        <div>{{timer | time1('yyyy')}}</div>
+    </div>
+    <script src='./vue.js'></script>
+    <script>
+        // 过滤器（管道函数） 一般用于一些常见的文本格式
+        // 将时间戳转换为年月日
+        Vue.filter('time', function (val) {
+            const data = new Date(val);
+            const y = data.getFullYear();
+            const m = data.getMonth() + 1;
+            const s = data.getDate();
+            return `${y}-${m}-${s}`
+        })
+        Vue.filter('str', function (val) {
+            return `今天是${val}`
+        })
+        // 带参数的过滤器
+        Vue.filter('time1', function (val, param) {
+            // 带参数的过滤器，参数1是要过滤的数据，后面的参数是用户传递的参数
+            const data = new Date(val);
+            const y = data.getFullYear();
+            const m = data.getMonth() + 1;
+            const s = data.getDate();
+            if (param == 'yyyy') {
+                return `${y}`;
+            } else if (param == 'yyyy-mm') {
+                return `${y}-${m}`
+            } else if (param == 'yyyy-mm-dd') {
+                return `${y}-${m}-${s}`
+            }
+
+        })
+        Vue.filter('str', function (val) {
+            return `今天是${val}`
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                timer: +new Date()
+            },
+            methods: {},
+            // 局部过滤器
+            // filters: {
+            //   dateformat: function (val) {
+            //     // console.log(val);
+            //     const date = new Date(val);
+            //     const year = date.getFullYear();
+            //     const month = date.getMonth() + 1;
+            //     const day = date.getDate();
+            //     // console.log(day);
+            //     return `${year}-${month}-${day}`;
+            //   },
+            // },
+        })
+    </script>
+</body>
+
+</html>

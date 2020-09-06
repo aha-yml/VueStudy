@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <!-- 具名插槽的slot方式    只在Vue的2.6.10以前的版本可以用，后面被废弃了 -->
+        <com>
+            <header slot="header">头部区域</header>
+            <footer slot="footer">底部区域</footer>
+        </com>
+        <hr>
+        <!-- 具名插槽的v-slot方式    在Vue的2.6.10版本开始主要使用  一定要放在template标签中，用：的方式 -->
+        <com>
+            <!-- v-slot: 可以简写为#  #header -->
+            <template v-slot:header>
+                <header>头部区域</header>
+            </template>
+            <template v-slot:footer>
+                <footer>底部区域</footer>
+            </template>
+            
+        </com>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        Vue.component('com', {
+            template: `
+                 <div>
+                    <slot name="header"></slot>
+                    我是组件com内容区域
+                    <slot name="footer"></slot>  
+                </div>
+            `
+        })
+        new Vue({
+            el: '#app',
+            data:{  },
+            methods:{},
+        })
+    </script>
+</body>
+</html>
