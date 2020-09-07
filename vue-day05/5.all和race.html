@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>
+        // 封装promise
+        function request(url) {
+            return new Promise((resolve,reject) => {
+                $.ajax({
+                    url: url,
+                    success(data) {
+                        resolve(data);
+                    },
+                    error(err) {
+                        reject(err)
+                    },
+                });
+            });
+        }
+
+        // all 将所有的响应拿到后，返回结果 放在数组中
+        Promise.all([
+        request("http://localhost:3000/data"),
+        request("http://localhost:3000/data1"),
+        request("http://localhost:3000/data2")
+        ]).then((res) => {
+            console.log(res); // 是个数组
+        })
+
+        // 拿到响应最快的结果
+        Promise.race([
+        request("http://localhost:3000/data"),
+        request("http://localhost:3000/data1"),
+        request("http://localhost:3000/data2")
+        ]).then((res) => {
+            console.log(res); // 一个数据
+        })
+    </script>
+</body>
+</html>

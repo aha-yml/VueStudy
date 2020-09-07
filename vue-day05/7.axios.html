@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>
+        // axios.请求方式 得到的是一个promise对象，可以直接.then
+        // axios响应的结果给我们做了额外包装处理
+        // 再 .data 一下，才可以拿到想要的数据
+        axios.get("http://localhost:3000/data").then(
+            (res) => {
+                console.log(res);
+            }
+        )
+    </script>
+</body>
+</html>

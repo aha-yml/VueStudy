@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- ajax请求的响应结果需要相互依赖，保证完成顺序，回调套回调， 会造成 回调地狱解决回调地狱 可以使用promise -->
+
+    <!-- Promise只是一种异步编程规范，为了解决回调地狱的问题 -->
+    
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>
+        // 在Promise中  两个参数是函数
+        const p = new Promise(function(resolve,reject) {
+            // resolve 是请求成功返回的
+            // reject是请求失败返回的
+                $.ajax({
+                    url: "http://localhost:3000/data",
+                    success(data) {// 成功的响应函数
+                        // 调用resolve函数
+                        resolve(data)
+                    },
+                    error(err) { // 失败的响应函数
+                        // 调用reject函数
+                        reject(err)
+                    },
+                });
+        });
+        //  p.then 成功的响应
+        // p.then 失败的响应
+        p
+        .then(data => {
+        console.log(data);
+        }) 
+        .catch(err => {
+        conse.log(err)
+        })
+    </script>
+</body>
+</html>

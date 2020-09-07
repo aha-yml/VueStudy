@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="jquery-3.5.1.min.js"></script>
+    <script>
+        //  Fetch API是新的ajax解决方案 Fetch会返回Promise
+        //  fetch不是ajax的进一步封装，而是原生js，没有使用XMLHttpRequest对象。
+
+        // 不带参数的
+        // 第一个参数请求的路径   
+        // Fetch会返回Promise   所以我们可以使用then 拿到请求成功的结果
+        fetch("http://localhost:3000/json")
+        .then((res) => {
+            // console.log(res); // Response 此处的 res 是响应的数据流 不是promise对象
+
+            // 将获取到的数据转换成字符串
+            // res.text() 才是promise对象
+            // return res.text(); // .text() 纯文本
+
+            // 将获取到的数据使用 json 转换对象
+            return res.json()   // .json 返回的是一个json对象
+        })
+        .then((res) => {
+            console.log(res);  // 真正额度响应的结果
+        });
+
+        // 带参数的
+        // 第二个参数是请求方式，不写默认是get
+        fetch("http://localhost:3000/json",{method: "delete"})
+        .then((res) => {
+            return res.text(); // .text() 纯文本
+        })
+        .then((res) => {
+            console.log(res);  // 真正额度响应的结果
+        });
+
+        // 用fetch来获取数据，如果响应正常返回，我们首先看到的是一个response对象，其中包括返回的一堆原始字节，这些字节需要在收到后，需要我们通过调用方法将其转换为相应格式的数据，比如JSON，BLOB或者TEXT等等
+    </script>
+</body>
+</html>
