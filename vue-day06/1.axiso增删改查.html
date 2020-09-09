@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'></div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script src="axios.js"></script>
+    <script>
+        // 设置一个基地址
+        axios.defaults.baseURL = "http://localhost:3000/"
+        // 一般添加一个身份令牌  111是一个后端服务器返回给我们的随机字符串
+        axios.defaults.headers.common['Authorization'] = '111'
+
+        // 1.安装 json-server   npm i json-server -g
+        // 2.创建 .json文件
+        // 3.json-server  --watch db.json  就可以访问
+
+        // localhost:3000 地址 json-server  帮我们开启的服务
+        new Vue({
+            el: '#app',
+            data:{ 
+                list: []
+             },
+            methods:{
+                // 删除id为4的数据 delete
+                del() {
+                    axios.delete('fruits/4').then
+                    (res => {
+                        // 响应结果是一个空对象，表示删除成功
+                        console.log(res.data);
+                    })
+                },
+                // 发送post请求，发送post请求的时候，需要携带参数, name
+                add() {
+                    axios.post('fruits',{name:'猕猴桃'}).then
+                    (res => {
+                        console.log(res.data);
+                    })
+                },
+                // put更改数据 讲id为4的水果名称修改为 芒果
+                edit() {
+                    axios.put('fruits/4',{name:'芒果'}).then
+                    (res => {
+                        console.log(res.data);
+                    })
+                }
+            },
+            // 获取所有数据 get
+            // 根据id获取数据 get请求需要携带额外参数的时候 需要使用params字段携带
+            created() {
+                // axiso.get('http://localhost:3000/fruist').then
+                // (res => {
+                //     console.log(res.data);
+                //     this.list = res.data;
+                // })
+                axios.get('fruits').then
+                (res => {
+                    console.log(res.data);
+                })
+            }
+        })
+    </script>
+</body>
+</html>

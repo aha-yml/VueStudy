@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'></div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script src="./axios.js"></script>
+    <script>
+        // 设置一个基地址
+        axios.defaults.baseURL = "http://localhost:3000/"
+        // 一般添加一个身份令牌  111是一个后端服务器返回给我们的随机字符串
+        axios.defaults.headers.common['Authorization'] = '111'
+
+
+        // 我们每次发送的请求 或者响应都会被axios的拦截器所监听到
+        // 在 axios请求成功，返回的结果中，我们要的结果被包含在data的字段中，我们可以使用响应拦截器，讲数据抽出来
+        // 请求拦截器 发送请求之前会进入请求拦截器
+        axios.interceptors.request.use(
+            function(config) {
+                console.log(config);
+                // 挂载sex字段
+                config.sex = 'man'
+                return congig;
+            },
+            function (error) {
+                return Promise.reject(error);
+            }
+        );
+        // 响应拦截器 响应之前会进入响应拦截器
+        axios.interceptors.response.use(function(res) {
+             console.log('响应');
+             console.log(res);
+            //  在响应拦截器中 将data 剥离
+            return res.data;
+        })
+        new Vue({
+            el: '#app',
+            data:{ 
+                list: []
+             },
+            methods:{},
+                
+            created() {
+                // axiso.get('http://localhost:3000/fruist').then
+                // (res => {
+                //     console.log(res.data);
+                //     this.list = res.data;
+                // })
+                axios.get('fruits').then
+                (res => {
+                    console.log(res);
+                    this.list = res;
+                })
+            }
+        })
+    </script>
+</body>
+</html>

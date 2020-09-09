@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* router-link-active 也是查找到被点击的路由连接，不过不如下面的精确 */
+        /* 精确查找当前被点击的路由连接 */
+        .router-link-exact-active {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- to 属性 相当于a 标签的 href属性 -->
+        <router-link to="/music">音乐</router-link>
+        <router-link to="/movie">电影</router-link>
+        <router-link to="/news">新闻</router-link>
+        <!--路由占位 也可简写为单标签-->
+        <router-view></router-view>
+    </div>
+
+    <!-- 1.引入vue 和vue-router -->
+    <script src="./vue.js"></script>
+    <script src="vue-router.js"></script>
+    <script>
+        // 2.创建组件
+        const music = {
+            template: `
+               <div>
+                <h2>音乐列表</h2>
+                <router-link to="/music/rock">摇滚</router-link>
+               <router-link to="/music/classical">古典</router-link>
+               <router-link to="/music/pop">流行</router-link>
+               <router-view />
+                </div>
+               
+            `
+        };
+        const movie = {
+            template: `
+               <div>电影列表</div>
+            `
+        };
+        const news = {
+            template: `
+               <div>新闻列表</div>
+            `
+        };
+        // 三个小组件
+        const rock = {
+            template: `
+                <div>摇滚乐</div>
+            `
+        };
+        const classical = {
+            template: `
+                <div>古典乐</div>
+            `
+        };
+        const pop = {
+            template: `
+                <div>流行乐</div>
+            `
+        };
+
+        // 3.创建路由规则，是一个数组
+        const routes = [
+            // 路由重定向，就是打开页面默认跳转到指定页面
+            { path: '/', redirect: "/music" },
+            // path是路径 表示的是路由地址
+            { 
+             path: '/music', 
+             component: music,
+             children: [
+                 {path: "/music/rock",component:rock},
+                 {path: "/music/classical",component:classical},
+                 {path: "/music/pop",component:pop},
+             ],
+        
+            },
+            { path: '/movie', component: movie },
+            { path: '/news', component: news }
+        ]
+
+        // 4.创建路由实例并挂载规则
+        const router = new VueRouter({
+            routes: routes
+        })
+
+        new Vue({
+            el: '#app',
+            data: {},
+            // 5.讲路由实例 挂载给 vue实例
+            // router: router
+            router
+        })
+    </script>
+</body>
+
+</html>

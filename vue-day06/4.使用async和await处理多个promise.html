@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'></div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script src="./jquery-3.5.1.min.js"></script>
+    <script>
+        // promise的封装
+        function request(url) {
+            // 额外定义一个async函数
+            async function fn() {
+                // 第一个await没有响应结束，第二个await是不会响应的
+                const res1 = await request("http://localhost:3000/data");
+                const res2 = await request("http://localhost:3000/data1");
+                const res3 = await request("http://localhost:3000/data2");
+                console.log(res1);
+                console.log(res2);
+                console.log(res3);
+            }
+            fn();
+
+        }
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

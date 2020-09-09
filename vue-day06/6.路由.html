@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!-- node中 后端路由 请求方式和请求的地址被服务器听到之后，数据库的增删改查操作，返回给前端数据 -->
+
+<!-- 前端路由 -->
+
+<!-- 
+    1.引入vue 和vue-router
+    2. 创建组件
+    3.定义路由规则
+    -->
+    <div id="app">
+        <!-- to 属性 相当于a 标签的 href属性 -->
+        <router-link to="/music">音乐</router-link>
+        <router-link to="/movie">电影</router-link>
+        <router-link to="/news">新闻</router-link>
+        <!--路由占位 也可简写为单标签-->
+        <router-view></router-view>
+    </div>
+    
+<!-- 1.引入vue 和vue-router -->
+    <script src="./vue.js"></script>
+    <script src="vue-router.js"></script>
+    <script>
+        // 2.创建组件
+        const music = {
+            template: `
+               <div>音乐列表</div>
+            `
+        };
+        const movie = {
+            template: `
+               <div>电影列表</div>
+            `
+        };
+        const news = {
+            template: `
+               <div>新闻列表</div>
+            `
+        };
+
+        // 3.创建路由规则，是一个数组
+        const routes = [
+            // 路由重定向，就是打开页面默认跳转到指定页面
+            {path: '/',redirect: "/music"},
+            // path是路径 表示的是路由地址
+            {path: '/music',component: music},
+            {path: '/movie',component: movie}+
+            {path: '/news',component: news}
+        ]
+
+        // 4.创建路由实例并挂载规则
+        const router = new VueRouter({
+            routes: routes
+        })
+
+        new Vue({
+            el:'#app',
+            data: {},
+            // 5.讲路由实例 挂载给 vue实例
+            // routes: routes
+            router
+        })
+    </script>
+</body>
+</html>
