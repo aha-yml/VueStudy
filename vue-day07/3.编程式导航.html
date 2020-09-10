@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+       <!-- location.href 原生js的编程式导航 页面跳转-->
+
+       <!-- 声明式导航  只有点击a连接的传递参数是999 -->
+        <router-link to="/news/999">新闻</router-link>
+        <router-link to="/music">音乐</router-link>
+        <router-view></router-view>
+      </div>
+      <script src="vue.js"></script>
+      <script src="vue-router.js"></script>
+      <script>
+          const news = {
+               props:['id'],
+               template: `<div>
+                      <h2>新闻----{{id}}</h2>
+                      <button @click="go">跳转到音乐</button>
+               </div>`,
+               methods: {
+                   go() {
+                    // this.$router是路由实例
+                    // go(数值) 整数前进，负数后退
+                    // back() 后退
+                       this.$router.push('/music')
+                   }
+               }
+           }
+  
+          const music = {
+            //   通过编程是导航的方式跳转传递的是  这个 9
+              template: `<div>
+              <h2>音乐</h2>
+                <button @click="$router.push('news/9)">跳转到新闻</button>
+              </div>`
+          }
+      
+        const router =  new VueRouter({
+              routes: [
+                  {path:'/',redirect:'/news'},
+                  {
+                    path:'/new/:id',
+                    component:news,
+                    props: true
+                  },
+                  {path:'/music',component:music}
+              ]
+          })
+          new Vue({
+              el: '#app',
+              data:{  },
+              methods:{},
+              router
+          })
+      </script>
+</body>
+</html>

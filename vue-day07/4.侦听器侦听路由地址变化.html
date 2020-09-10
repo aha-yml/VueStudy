@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/music">音乐</router-link>
+        <router-link to="/news">新闻</router-link>
+        <router-view></router-view>
+    </div>
+    
+    <script src="vue.js"></script>
+    <script src="./vue-router.js"></script>
+    <script>
+        const music = {
+            template: `<div>音乐111</div>`
+        };
+        const news = {
+            template: `<div>新闻222</div>`
+        };
+        const router = new VueRouter({
+            routes: [
+                {path:'/music',component: music},
+                {path:'/news',component: news}
+            ],
+        });
+        new Vue({
+            el:'#app',
+            data: {},
+            methods: {},
+            router,
+            // 侦听器可以监听到路由地址的变化  计算属性侦听不到路由地址的变化
+            watch: {
+                '$route'(val) {
+                    console.log(val.path);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

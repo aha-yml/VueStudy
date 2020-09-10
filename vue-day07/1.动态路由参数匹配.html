@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/news">新闻</router-link>
+      <router-link to="/music">音乐</router-link>
+      <router-view></router-view>
+    </div>
+    <script src="vue.js"></script>
+    <script src="vue-router.js"></script>
+    <script>
+      // 动态路由匹配，将路由地址中的参数拿到$route是当前路由地址的信息对象
+
+      // 方法一：
+        // const news = {
+        //     template: `<div>新闻
+        //                {{$route.params.bac}}
+        //                ----------------------
+        //                {{$route.params.id}}
+        //       </div>`
+        // }
+        // 方法二：布尔值   需要在path里设置 props:true ，开启props传参
+        // const news = {
+        //     props:['abc','id'],
+        //     template: `<div>新闻
+        //               {{$route.params.bac}}
+        //                ----------------------
+        //                {{$route.params.id}}
+        //               </div>`
+        // }
+        // 方法三：对象方式 静态属性
+        // const news = {
+        //      props:['name','sex','boo'],
+        //      template: `<div>新闻---{{name}}---{{sex}}---{{boo}}</div>`
+        //  }
+        // 方法四：函数方法 将静态值与基于路由的值结合
+        const news = {
+             props:['id','name','sex','boo'],
+             template: `<div>新闻----{{id}}---{{name}}---{{sex}</div>`
+         }
+
+        const music = {
+            template: `<div>音乐</div>`
+        }
+        // 路由对象和路由规则
+      const router =  new VueRouter({
+            routes: [
+                {path:'/',redirect:'/news'},
+                // 方法一对应
+                // {path:'/news/:abc/:id',component:news},
+                // 方法二对应
+                // {path:'/news/:abc/:id',component:news,props:true},
+                // 方法三对应
+                // {
+                //   path:'/news',
+                //   component:news,
+                //   props:{name:'zs',sex:'man',boo:true}
+                //   },
+                // 方法四对应
+                {
+                  path:'/news',
+                  component:news,
+                  // props: (route) => {
+                  //     return {
+                  //       id: route.params.id,
+                  //       name: 'zs',
+                  //       sex: 'man'
+                  //     };
+                  // }
+                  props: (route) => ({id:route.params.id,name: 'zs',sex: 'man'})
+                },
+                {path:'/music',component:music}
+            ]
+        })
+        new Vue({
+            el: '#app',
+            data:{  },
+            methods:{},
+            router
+        })
+    </script>
+  </body>
+</html>
